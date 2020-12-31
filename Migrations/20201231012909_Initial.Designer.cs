@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspNetDocker.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20201224172905_Initial")]
+    [Migration("20201231012909_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,17 +28,30 @@ namespace AspNetDocker.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CPF")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d06c4f86-bd87-4c37-a2cd-454f8115df62"),
+                            CPF = "38986605082",
+                            CreationDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Teste"
+                        });
                 });
 #pragma warning restore 612, 618
         }
